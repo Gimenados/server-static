@@ -19,31 +19,33 @@ const createFile = () => {
     const buffer = Buffer.from(content);
     
     try {
-        fs.writeFileSync(dirName, buffer);
+        fs.writeFileSync(dirName, buffer); //Para escribir el contenido del archivo en el sistema de archivos. Toma el nombre del archivo y el en forma de bufer 
         console.log(colors.green("El archivo se ha creado correctamente"));
     } catch (error) {
         console.log(colors.red("Lo sentimos, no hemos podido crear el archivo"));
     }
 };
 
+//Nuevo archivo
 const readFile = () => {
     const fileName = promptFunc(colors.blue("Ingrese el nombre del archivo a leer: "));
     const dirName = `./files/${fileName}`;
 
     try {
-        const file = fs.readFileSync(dirName);
-        const data = file.toString();
+        const file = fs.readFileSync(dirName); //Para poder leer el contenido del archivo
+        const data = file.toString(); //La cadena se almacena en data y toma toString para que sea legible
         console.log(colors.green(data));
     } catch (error) { 
         console.log(colors.red("Este archivo no se puede leer"));
     }
 };
 
+//Actualizar el contenido de un archivo existente
 const updateFile = () => {
     const fileName = promptFunc(colors.blue("Ingrese el nombre del archivo a modificar: "));
-    const content = promptFunc(colors.blue("Ingrese el nuevo contenido del archivo: "));
     const dirName = `./files/${fileName}`;
-    const buffer = Buffer.from(content);
+    const content = promptFunc(colors.blue("Ingrese el nuevo contenido del archivo: "));
+    const buffer = Buffer.from(content); //Necesario para escribir el contenido en el archivo
     
     try {
         fs.writeFileSync(dirName, buffer);
@@ -53,18 +55,20 @@ const updateFile = () => {
     }
 };
 
+//ELiminar archivo existente
 const deleteFile = () => {
     const fileName = promptFunc(colors.blue("Ingrese el nombre del archivo a eliminar: "));
     const dirName = `./files/${fileName}`;
 
     try {
-        fs.rmSync(dirName);
+        fs.rmSync(dirName); // Para eliminar el archivo especificado por dirName
         console.log(colors.green("El archivo se ha eliminado correctamente"));
     } catch (error) {
         console.log(colors.red("Lo sentimos, no hemos podido eliminar el archivo"));
     }
 };
 
+//Encapsula la funcionalidad de hacer una pregunta al usuario y esperar su respuesta.
 const askQuestion = (question) => {
     return new Promise(resolve => {
         rl.question(question, answer => {
@@ -75,7 +79,7 @@ const askQuestion = (question) => {
 
 const main = async () => {
     await fileController();
-    rl.close(); // Cerrar la interfaz readline cuando terminemos
+    rl.close(); 
 };
 
 export const fileController = async () => {
@@ -93,19 +97,19 @@ export const fileController = async () => {
         case "E":
             updateFile();
             break;
-        case "C":
-            createFile();
-            break;
-        case "D":
-            deleteFile();
-            break;
-        case "Q":
-            return;
-        default:
-            console.log(colors.red("Acción no válida"));
-            break;
-    }
-};
-
-
-main();
+            case "C":
+                createFile();
+                break;
+                case "D":
+                    deleteFile();
+                    break;
+                    case "Q":
+                        return;
+                        default:
+                            console.log(colors.red("Acción no válida"));
+                            break;
+                        }
+                    };
+                    
+                    
+                    main();
